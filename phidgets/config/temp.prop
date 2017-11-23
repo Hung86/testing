@@ -1,0 +1,6 @@
+threshold_low_min=23
+threshold_low_max=25
+threshold_high_min=27
+threshold_high_max=30
+waiting_time_1c_in_minute=3 
+waiting_time_power_in_minute=10
