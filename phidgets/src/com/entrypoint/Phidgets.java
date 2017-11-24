@@ -49,12 +49,12 @@ public class Phidgets {
 	}
 	
 	public void action() {
-		mLogger.info("[action] getting action");
+		mLogger.debug("[action] getting action");
 		int act = Hub0000_0.getAction();
 		if (act != PhidgetsDevice.ACTION_NONE) {
-			
+			ir1055_0.doAction(act);
 		} else {
-			mLogger.info("[action] do nothing");
+			mLogger.debug("[action] do nothing");
 		}
 	}
 	

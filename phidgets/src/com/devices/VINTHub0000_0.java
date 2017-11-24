@@ -91,6 +91,7 @@ public class VINTHub0000_0 extends PhidgetsDevice{
 			mLogger.info("[getAction] current temperature : " + temperature + " C");
 			if (temperature < threshold_low_min) {
 				if (lastAction == ACTION_OFF) {
+					mLogger.debug("[getAction] temperature  " + temperature + " in threshold_low_min case with ACTION_OFF");
 					// waiting temperature rise up, if it is not , that aircon can be not turn off
 					// yet
 					if ((System.currentTimeMillis() - waitignTime) < waiting_time_power_in_ms) {
@@ -99,6 +100,7 @@ public class VINTHub0000_0 extends PhidgetsDevice{
 					// continue
 					// try to turn off aircon
 				}
+				mLogger.debug("[getAction] temperature  " + temperature + " in threshold_low_min case set to ACTION_OFF");
 				lastAction = ACTION_OFF;
 				waitignTime = System.currentTimeMillis();
 				return lastAction;
@@ -106,9 +108,11 @@ public class VINTHub0000_0 extends PhidgetsDevice{
 
 			if (temperature < threshold_low_max) {
 				if (lastAction == ACTION_OFF) {
+					mLogger.debug("[getAction] temperature  " + temperature + " in threshold_low_max case with ACTION_OFF");
 					return ACTION_NONE;
 				}
 				if (lastAction == ACTION_UP) {
+					mLogger.debug("[getAction] temperature  " + temperature + " in threshold_low_max case with ACTION_UP");
 					// waiting temperature rise up
 					if ((System.currentTimeMillis() - waitignTime) < waiting_time_1c_in_ms) {
 						return ACTION_NONE;
@@ -116,6 +120,7 @@ public class VINTHub0000_0 extends PhidgetsDevice{
 					// continue
 					// try to increase temperature
 				}
+				mLogger.debug("[getAction] temperature  " + temperature + " in threshold_low_max case set to ACTION_UP");
 				waitignTime = System.currentTimeMillis();
 				lastAction = ACTION_UP;
 				return lastAction;
@@ -123,6 +128,7 @@ public class VINTHub0000_0 extends PhidgetsDevice{
 
 			if ((temperature > threshold_high_min) && (temperature < threshold_high_max)) {
 				if (lastAction == ACTION_DOWN) {
+					mLogger.debug("[getAction] temperature  " + temperature + " in threshold_high_min case with ACTION_DOWN");
 					// waiting temperature decrease down
 					if ((System.currentTimeMillis() - waitignTime) < waiting_time_1c_in_ms) {
 						return ACTION_NONE;
@@ -130,6 +136,7 @@ public class VINTHub0000_0 extends PhidgetsDevice{
 					// continue
 					// try to decrease temperature
 				}
+				mLogger.debug("[getAction] temperature  " + temperature + " in threshold_high_min case set to ACTION_DOWN");
 				waitignTime = System.currentTimeMillis();
 				lastAction = ACTION_DOWN;
 				return lastAction;
@@ -137,10 +144,12 @@ public class VINTHub0000_0 extends PhidgetsDevice{
 
 			if (temperature > threshold_high_max) {
 				if (lastAction == ACTION_OFF) {
+					mLogger.debug("[getAction] temperature  " + temperature + " in threshold_high_max case with ACTION_OFF , force to ACTION_ON");
 					return ACTION_ON;
 				}
 
 				if (lastAction == ACTION_ON) {
+					mLogger.debug("[getAction] temperature  " + temperature + " in threshold_high_max case with ACTION_ON");
 					// waiting temperature decrease down
 					if ((System.currentTimeMillis() - waitignTime) < waiting_time_power_in_ms) {
 						return ACTION_NONE;
@@ -148,6 +157,7 @@ public class VINTHub0000_0 extends PhidgetsDevice{
 					// continue
 					// try to decrease temperature
 				}
+				mLogger.debug("[getAction] temperature  " + temperature + " in threshold_high_max case set to ACTION_ON");
 				waitignTime = System.currentTimeMillis();
 				lastAction = ACTION_ON;
 				return lastAction;
